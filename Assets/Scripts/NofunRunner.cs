@@ -284,6 +284,8 @@ namespace Nofun
             }
             catch (System.Exception _)
             {
+                gameStream?.Dispose();
+
                 dialogService.Show(Severity.Info, ButtonType.OK,
                     null,
                     translationService.Translate("Error_Description_GameNotCompatible"),

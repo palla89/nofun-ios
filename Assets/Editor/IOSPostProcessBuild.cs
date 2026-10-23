@@ -36,7 +36,9 @@ namespace Nofun
             string projectPath = PBXProject.GetPBXProjectPath(buildPath);
             PBXProject project = new PBXProject();
             project.ReadFromFile(projectPath);
-            project.AddFrameworkToProject(project.GetUnityFrameworkTargetGuid(), "libsqlite3.tbd", false);
+            // AddFrameworkToProject would look in System/Library/Frameworks, but .tbd libraries live in usr/lib
+            string sqliteGuid = project.AddFile("usr/lib/libsqlite3.tbd", "Frameworks/libsqlite3.tbd", PBXSourceTree.Sdk);
+            project.AddFileToBuild(project.GetUnityFrameworkTargetGuid(), sqliteGuid);
             project.WriteToFile(projectPath);
 
             // Expose the app's Documents folder in the Files app and Finder, so games and saves are reachable
