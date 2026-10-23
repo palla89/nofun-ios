@@ -27,7 +27,9 @@ using Nofun.Util;
 using System.IO;
 using System.Runtime.InteropServices;
 using Nofun.Module.VMGP;
+#if !UNITY_IOS
 using Nofun.PIP2.Translator;
+#endif
 using Nofun.Settings;
 using UnityEngine;
 
@@ -223,8 +225,16 @@ namespace Nofun.VM
 
             memory = new VMMemory(totalSize);
 
-            switch (GameSetting.cpuBackend)
+#if UNITY_IOS
+            // iOS does not allow JIT, so the interpreter is the only usable backend there
+            CPUBackend cpuBackend = CPUBackend.Interpreter;
+#else
+            CPUBackend cpuBackend = GameSetting.cpuBackend;
+#endif
+
+            switch (cpuBackend)
             {
+#if !UNITY_IOS
                 case CPUBackend.LLVM:
                     processor = new PIP2.Translator.Translator(new PIP2.ProcessorConfig(),
                         gameName.ToValidFileName(),
@@ -240,6 +250,7 @@ namespace Nofun.VM
                         (x) => VMGPModule.StackAllocator.Free(x));
 
                     break;
+#endif
 
                 case CPUBackend.Interpreter:
                     processor = new PIP2.Interpreter.Interpreter(new PIP2.ProcessorConfig()

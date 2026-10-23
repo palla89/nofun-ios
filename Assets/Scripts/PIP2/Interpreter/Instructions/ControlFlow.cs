@@ -229,6 +229,14 @@ namespace Nofun.PIP2.Interpreter
             }
         }
 
+        private void BGEUI(TwoSourcesEncoding encoding)
+        {
+            if (Reg[encoding.d] >= encoding.s)
+            {
+                Reg[Register.PC] = (uint)(Reg[Register.PC] + ((sbyte)encoding.t - 1) * 4);
+            }
+        }
+
         private void BGTI(TwoSourcesEncoding encoding)
         {
             if ((int)Reg[encoding.d] > (sbyte)encoding.s)
@@ -298,6 +306,14 @@ namespace Nofun.PIP2.Interpreter
         private void BGEIB(TwoSourcesEncoding encoding)
         {
             if ((sbyte)Reg8[encoding.d] >= (sbyte)encoding.s)
+            {
+                Reg[Register.PC] = (uint)(Reg[Register.PC] + ((sbyte)encoding.t - 1) * 4);
+            }
+        }
+
+        private void BGEUIB(TwoSourcesEncoding encoding)
+        {
+            if (Reg8[encoding.d] >= encoding.s)
             {
                 Reg[Register.PC] = (uint)(Reg[Register.PC] + ((sbyte)encoding.t - 1) * 4);
             }

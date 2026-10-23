@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-#if UNITY_ANDROID
+#if UNITY_ANDROID || UNITY_IOS
 using UnityEngine;
 #elif UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_LINUX
 using Nofun.Plugins.Private;
@@ -51,7 +51,7 @@ namespace Nofun.Plugins
 
             return true;
         }
-#elif UNITY_ANDROID
+#elif UNITY_ANDROID || UNITY_IOS
         public static bool OpenPickFileDialog(FilterItem[] filters, Action<string> onPathReceived, string defaultPath = null)
         {
             if (NativeFilePicker.PickFile(

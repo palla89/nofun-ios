@@ -21,22 +21,29 @@ namespace Nofun.Driver.Unity.Audio
 {
     public static class TSFMidiRenderer
     {
-        [DllImport("TSFMidiRenderer", EntryPoint = "nofunTSFStartup")]
+#if UNITY_IOS && !UNITY_EDITOR
+        // On iOS the renderer is compiled from source into the app binary
+        private const string LibraryName = "__Internal";
+#else
+        private const string LibraryName = "TSFMidiRenderer";
+#endif
+
+        [DllImport(LibraryName, EntryPoint = "nofunTSFStartup")]
         public static extern int Startup(IntPtr soundFontBuffer, uint soundFontSize, int outputFreq);
 
-        [DllImport("TSFMidiRenderer", EntryPoint = "nofunTSFShutdown")]
+        [DllImport(LibraryName, EntryPoint = "nofunTSFShutdown")]
         public static extern void Shutdown();
 
-        [DllImport("TSFMidiRenderer", EntryPoint = "nofunTSFLoad")]
+        [DllImport(LibraryName, EntryPoint = "nofunTSFLoad")]
         public static extern IntPtr Load(IntPtr midiData, uint midiDataSize, int loop = 0);
 
-        [DllImport("TSFMidiRenderer", EntryPoint = "nofunTSFFree")]
+        [DllImport(LibraryName, EntryPoint = "nofunTSFFree")]
         public static extern void Free(IntPtr handle);
 
-        [DllImport("TSFMidiRenderer", EntryPoint = "nofunTSFGetBuffer")]
+        [DllImport(LibraryName, EntryPoint = "nofunTSFGetBuffer")]
         public static extern void GetBuffer(IntPtr dataBuffer, int sampleCount);
 
-        [DllImport("TSFMidiRenderer", EntryPoint = "nofunTSFGetDonePlayingHandles")]
+        [DllImport(LibraryName, EntryPoint = "nofunTSFGetDonePlayingHandles")]
         public static extern IntPtr GetDonePlayingHandles(IntPtr count);
     };
 }

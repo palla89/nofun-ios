@@ -38,9 +38,9 @@ namespace Nofun.PIP2.Interpreter
                 I(EXSH), I(MOV), I(ADDB), I(SUBB), I(ANDB), I(ORB), I(MOVB), I(ADDH),    // 0x10
                 I(SUBH), I(ANDH), I(ORH), I(MOVH), I(SLLi), I(SRAi), I(SRLi), I(ADDQ),    // 0x18
                 I(MULQ), I(ADDBi), I(ANDBi), I(ORBi), I(SLLB), I(SRLB), I(SRAB), I(ADDHi),    // 0x20
-                I(ANDHi), I(SLLH), I(SRLH), I(SRAH), I(BEQI), I(BNEI), I(BGEI), null,    // 0x28
+                I(ANDHi), I(SLLH), I(SRLH), I(SRAH), I(BEQI), I(BNEI), I(BGEI), I(BGEUI),    // 0x28
                 I(BGTI), I(BGTUI), I(BLEI), I(BLEUI), I(BLTI), I(BLTUI), I(BEQIB), I(BNEIB),    // 0x30
-                I(BGEIB), null, I(BGTIB), I(BGTUIB), I(BLEIB), I(BLEUIB), I(BLTIB), I(BLTUIB),    // 0x38
+                I(BGEIB), I(BGEUIB), I(BGTIB), I(BGTUIB), I(BLEIB), I(BLEUIB), I(BLTIB), I(BLTUIB),    // 0x38
                 I(LDQ), I(JPr), I(CALLr), I(STORE), I(RESTORE), I(RET), I(KILLTASK), I(SLEEP),    // 0x40
                 I(SYSCPY), I(SYSSET), I(ADDi), I(ANDi), I(MULi), I(DIVi), I(DIVUi), I(ORi),    // 0x48
                 I(XORi), I(SUBi), I(STBd), I(STHd), I(STWd), I(LDBd), I(LDHd), I(LDWd),    // 0x50

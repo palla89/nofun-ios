@@ -117,6 +117,11 @@ namespace Nofun.UI
                 // Hide it if not on mobile platform
                 orientationDropdown.style.display = DisplayStyle.None;
             }
+
+#if UNITY_IOS
+            // The LLVM recompiler needs JIT, which iOS forbids, so there is nothing to choose
+            cpuBackendDropdown.style.display = DisplayStyle.None;
+#endif
         }
 
         public void Setup(GameSettingsManager manager, string gameName, GameSetting? suggestedSetting = null)
@@ -188,6 +193,10 @@ namespace Nofun.UI
                 softwareScissorCheck.value = setting.Value.enableSoftwareScissor;
                 confirmButton.text = "Save";
             }
+
+#if UNITY_IOS
+            cpuBackendDropdown.index = (int)CPUBackend.Interpreter;
+#endif
         }
 
         public bool Save()

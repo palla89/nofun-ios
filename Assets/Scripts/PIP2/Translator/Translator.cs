@@ -1,3 +1,5 @@
+// The LLVM recompiler relies on JIT, which iOS does not allow
+#if !UNITY_IOS
 using System;
 using System.Collections.Generic;
 using System.Runtime.ExceptionServices;
@@ -423,3 +425,5 @@ namespace Nofun.PIP2.Translator
         public override int InstructionRan => 0;
     }
 }
+
+#endif

@@ -1,3 +1,5 @@
+// The LLVM recompiler relies on JIT, which iOS does not allow
+#if !UNITY_IOS
 using System;
 using System.Runtime.InteropServices;
 
@@ -21,3 +23,4 @@ namespace Nofun.PIP2.Translator
         public static extern void EngineSetRegister(IntPtr enginePtr, int reg, uint value);
     }
 }
+#endif

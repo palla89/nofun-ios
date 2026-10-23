@@ -195,6 +195,9 @@ namespace Nofun
             {
                 return;
             }
+#elif UNITY_IOS
+            // Games are only started from the game list on iOS
+            return;
 #else
             string[] cmdLines = System.Environment.GetCommandLineArgs();
 
@@ -284,7 +287,16 @@ namespace Nofun
                 dialogService.Show(Severity.Info, ButtonType.OK,
                     null,
                     translationService.Translate("Error_Description_GameNotCompatible"),
-                    value => Application.Quit());
+                    value =>
+                    {
+#if UNITY_IOS && !UNITY_EDITOR
+                        // iOS apps must not terminate themselves, go back to the game list instead
+                        Reset();
+                        gameListDocumentController.ImmediateShow();
+#else
+                        Application.Quit();
+#endif
+                    });
 
                 failed = true;
 

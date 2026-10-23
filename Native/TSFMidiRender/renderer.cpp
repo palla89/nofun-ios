@@ -19,6 +19,7 @@
 
 #include "tsf/tsf.h"
 #include "tsf/tml.h"
+#include <algorithm>
 #include <cstdint>
 #include <vector>
 

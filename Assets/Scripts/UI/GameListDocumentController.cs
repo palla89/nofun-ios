@@ -300,7 +300,15 @@ namespace Nofun.UI
         {
             bool permissionGranted = FilePicker.OpenPickFileDialog(new FilterItem[]
             {
-                #if UNITY_EDITOR || !UNITY_ANDROID
+                #if UNITY_IOS && !UNITY_EDITOR
+                // iOS filters by UTI and .mpn has no registered one, so accept any data file.
+                // InstallGame rejects anything that is not a Mophun executable.
+                new FilterItem
+                {
+                    name = "Mophun game",
+                    spec = "public.data"
+                }
+                #elif UNITY_EDITOR || !UNITY_ANDROID
                 new FilterItem
                 {
                     name = "Mophun game",

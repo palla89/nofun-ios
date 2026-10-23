@@ -27,6 +27,9 @@ namespace Nofun.UI
 
         protected UIDocument document;
 
+        private Rect appliedSafeArea;
+        private IPanel appliedSafeAreaPanel;
+
         public UIDocument Document => document;
 
         private void UpdatePanelSettings()
@@ -48,6 +51,42 @@ namespace Nofun.UI
         {
             UpdatePanelSettings();
             screenManager.ScreenOrientationChanged += OnOrientationChanged;
+        }
+
+        private void LateUpdate()
+        {
+            if (Application.isMobilePlatform)
+            {
+                ApplySafeArea();
+            }
+        }
+
+        /// <summary>
+        /// Keep the document content out of the notch and rounded corners on phones.
+        /// </summary>
+        private void ApplySafeArea()
+        {
+            VisualElement root = document.rootVisualElement;
+            Rect safeArea = Screen.safeArea;
+
+            if ((root?.panel == null) || ((safeArea == appliedSafeArea) && (root.panel == appliedSafeAreaPanel)))
+            {
+                return;
+            }
+
+            // Screen space has its origin at the bottom-left, panel space at the top-left
+            Vector2 topLeftInset = RuntimePanelUtils.ScreenToPanel(root.panel,
+                new Vector2(safeArea.xMin, Screen.height - safeArea.yMax));
+            Vector2 bottomRightInset = RuntimePanelUtils.ScreenToPanel(root.panel,
+                new Vector2(Screen.width - safeArea.xMax, safeArea.yMin));
+
+            root.style.paddingLeft = topLeftInset.x;
+            root.style.paddingTop = topLeftInset.y;
+            root.style.paddingRight = bottomRightInset.x;
+            root.style.paddingBottom = bottomRightInset.y;
+
+            appliedSafeArea = safeArea;
+            appliedSafeAreaPanel = root.panel;
         }
     }
 }
